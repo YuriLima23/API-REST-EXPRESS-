@@ -34,10 +34,38 @@ const createUser = (req,res) =>{
         res.status(201).send(`pessoa adicionado com sucesso ${result.insertId}`);
     })
 }
+const updateUser = (request, response) => {
+    const id = parseInt(request.params.id)
+    const { nome, email,senha } = request.body
+  
+    pool.query(
+      'UPDATE pessoa SET nome = $1, email = $2 ,senha = $3 WHERE id = $3',
+      [nome, email,senha, id],
+      (error, results) => {
+        if (error) {
+          throw error
+        }
+        response.status(200).send(`usuario alterado com sucessoID: ${id}`)
+      }
+    )
+  }
+  
+  const deleteUser = (request, response) => {
+    const id = parseInt(request.params.id)
+  
+    pool.query('DELETE FROM pessoa WHERE id = $1', [id], (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).send(`usuario deletado com sucesso ID: ${id}`)
+    })
+  }
 
 
 module.exports = {
     getAllUsers,
     getUserId,
     createUser,
+    deleteUser,
+    updateUser,
 }

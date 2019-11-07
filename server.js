@@ -25,3 +25,6 @@ app.use(
 
   app.get('/users',db.getAllUsers);
   app.post('/register',db.createUser);
+app.get('/users/:id', db.getUserById)
+app.put('/users/:id', db.updateUser)
+app.delete('/users/:id', db.deleteUser)
